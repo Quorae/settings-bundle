@@ -1,0 +1,56 @@
+{
+    "name": "quorae/settings-bundle",
+    "type": "symfony-bundle",
+    "description": "YAML-defined runtime settings with DB overrides, encryption, caching, validation, and a Live Component admin UI for Symfony 7+.",
+    "license": "MIT",
+    "keywords": ["symfony", "settings", "configuration", "runtime", "yaml", "live-component", "encryption"],
+    "authors": [
+        {
+            "name": "Tristan Florin",
+            "email": "tristan.florin@gmail.com"
+        }
+    ],
+    "require": {
+        "php": ">=8.3",
+        "symfony/cache": "^7.0",
+        "symfony/console": "^7.0",
+        "symfony/dependency-injection": "^7.0",
+        "symfony/http-kernel": "^7.0",
+        "symfony/validator": "^7.0",
+        "symfony/yaml": "^7.0",
+        "doctrine/orm": "^3.0",
+        "doctrine/doctrine-bundle": "^2.12",
+        "psr/log": "^3.0"
+    },
+    "require-dev": {
+        "phpunit/phpunit": "^11.0 || ^12.0",
+        "symfony/ux-live-component": "^2.18",
+        "symfony/ux-twig-component": "^2.18",
+        "symfony/security-bundle": "^7.0",
+        "symfony/twig-bundle": "^7.0",
+        "symfony/framework-bundle": "^7.0"
+    },
+    "suggest": {
+        "symfony/ux-live-component": "Required for the admin settings editor UI",
+        "symfony/ux-twig-component": "Required for the admin settings editor UI",
+        "symfony/security-bundle": "Required for admin route protection"
+    },
+    "autoload": {
+        "psr-4": {
+            "Quorae\\SettingsBundle\\": "src/"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "Quorae\\SettingsBundle\\Tests\\": "tests/"
+        }
+    },
+    "config": {
+        "sort-packages": true
+    },
+    "extra": {
+        "symfony": {
+            "require": "^7.0"
+        }
+    }
+}

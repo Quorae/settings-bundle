@@ -1,0 +1,42 @@
+{% set fieldId = 'quorae-settings-field-' ~ key %}
+{% set errorId = fieldId ~ '-errors' %}
+<div class="quorae-settings-field{% if errors %} quorae-settings-field--invalid{% endif %}">
+    <div class="quorae-settings-field__head">
+        <label class="quorae-settings-field__label" for="{{ fieldId }}">
+            {{ field.label }}
+            {% if isOverridden %}
+                <span class="quorae-settings-field__badge">override</span>
+            {% endif %}
+        </label>
+        {% if isOverridden %}
+            <button type="button"
+                    class="quorae-settings-field__reset"
+                    data-action="live#action"
+                    data-live-action-param="resetField"
+                    data-live-key-param="{{ key }}">
+                Reset to default
+            </button>
+        {% endif %}
+    </div>
+
+    {% if field.description %}
+        <p class="quorae-settings-field__description">{{ field.description }}</p>
+    {% endif %}
+
+    <input type="number"
+           step="1"
+           id="{{ fieldId }}"
+           name="{{ key }}"
+           class="quorae-settings-field__input"
+           value="{{ value is null ? '' : value }}"
+           data-model="debounce(300)|values[{{ key }}]"
+           {% if errors %}aria-invalid="true" aria-describedby="{{ errorId }}"{% endif %} />
+
+    {% if errors %}
+        <ul class="quorae-settings-field__errors" id="{{ errorId }}" role="alert">
+            {% for error in errors %}
+                <li>{{ error }}</li>
+            {% endfor %}
+        </ul>
+    {% endif %}
+</div>

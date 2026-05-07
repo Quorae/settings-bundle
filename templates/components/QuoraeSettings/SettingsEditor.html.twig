@@ -1,0 +1,53 @@
+<div {{ attributes.defaults({ class: 'quorae-settings-editor' }) }}
+     data-live-label="quorae-settings-editor-{{ group }}">
+
+    {% set groupData = this.groupData %}
+    {% set fields = this.fieldDefinitions %}
+
+    <header class="quorae-settings-editor__head">
+        <h2 class="quorae-settings-editor__title">{{ groupData.groupLabel }}</h2>
+        <p class="quorae-settings-editor__sub">
+            Group <code>{{ group }}</code> —
+            {{ fields|length }} field{{ fields|length > 1 ? 's' : '' }}
+            {% set overridesCount = this.overriddenKeys|length %}
+            {% if overridesCount > 0 %}· <span class="quorae-settings-editor__override-count">{{ overridesCount }} override{{ overridesCount > 1 ? 's' : '' }}</span>{% endif %}
+        </p>
+    </header>
+
+    {% if flashMessage %}
+        <div class="quorae-settings-editor__flash quorae-settings-editor__flash--{{ flashType ?? 'info' }}"
+             role="status"
+             aria-live="polite">
+            <span>{{ flashMessage }}</span>
+        </div>
+    {% endif %}
+
+    <form class="quorae-settings-editor__form"
+          data-action="live#action:prevent"
+          data-live-action-param="save">
+        {% if fields is empty %}
+            <p class="quorae-settings-editor__empty">This group declares no fields.</p>
+        {% else %}
+            <div class="quorae-settings-editor__fields">
+                {% for key, field in fields %}
+                    {% set value = values[key] ?? null %}
+                    {% set errors = errorsByField[key] ?? [] %}
+                    {% set isOverridden = this.isOverridden(key) %}
+                    {% include '@QuoraeSettings/components/QuoraeSettings/fields/_' ~ field.type ~ '.html.twig' with {
+                        field: field,
+                        key: key,
+                        value: value,
+                        errors: errors,
+                        isOverridden: isOverridden,
+                    } only %}
+                {% endfor %}
+            </div>
+
+            <footer class="quorae-settings-editor__foot">
+                <button type="submit" class="quorae-settings-editor__submit">
+                    Save
+                </button>
+            </footer>
+        {% endif %}
+    </form>
+</div>
