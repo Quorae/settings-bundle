@@ -1,0 +1,78 @@
+# .claude/profile.yaml — Quorae Settings Bundle
+# Validated against ~/.claude/PROFILE_SCHEMA.md
+
+meta:
+  id: settings-bundle
+  name: Quorae Settings Bundle
+  stack: symfony7
+  language: en
+  description: "YAML-defined runtime settings with DB overrides, encryption, caching, validation, and a Live Component admin UI for Symfony 7+."
+
+ticket:
+  provider: github
+  org: Quorae
+  repo: settings-bundle
+
+git:
+  branches:
+    primary: main
+    production: main
+  commit_format: "conventional"
+  branch_prefix: "feat|fix|refactor|chore"
+
+agents:
+  developer: symfony-tdd-developer
+  frontend: symfony-frontend-stimulus
+
+canonical_flow: "Handler → Service → Repository → Entity"
+
+code_style:
+  language: php83
+  features_required:
+    - "declare(strict_types=1)"
+    - "constructor DI"
+    - "final readonly class for DTOs/Handlers"
+    - "interfaces for public API (Contract/)"
+  forbidden_constructs:
+    - var_dump
+    - print_r
+    - "dd()"
+    - "dump()"
+    - die
+    - exit
+    - "silent catch (\\Exception)"
+  static_analysis_level: 8
+
+quality_commands:
+  static_analysis: "vendor/bin/phpstan analyse"
+  unit_test: "vendor/bin/phpunit"
+  style_check: "vendor/bin/php-cs-fixer check"
+  style_fix: "vendor/bin/php-cs-fixer fix"
+  full_check: "vendor/bin/phpstan analyse && vendor/bin/phpunit"
+
+paths:
+  src: "src/"
+  tests: "tests/"
+  config: "config/"
+  templates: "templates/"
+
+doc:
+  format: phpdoc
+
+workflows:
+  enabled: [feature, bugfix, refactor, investigate, review]
+  features:
+    spec_challenge: false
+    plan_driven_mode: true
+    tier_classification: false
+    smoke_contracts: false
+    wiki_doc: false
+    mcp_tools: false
+    auto_debugger_on_fail: true
+    post_workflow_reflection: true
+    chaos_audit: false
+
+gotchas:
+  - "Bundle extracted from AICD — keep BC, no AICD-specific assumptions"
+  - "Optional deps (Live Components, Security) must stay optional — use interface segregation"
+  - "Tests not yet written — TDD for all new features"
