@@ -15,7 +15,8 @@
     </header>
 
     {% if flashMessage %}
-        <div class="quorae-settings-editor__flash quorae-settings-editor__flash--{{ flashType ?? 'info' }}"
+        <div id="quorae-settings-flash-{{ group }}"
+             class="quorae-settings-editor__flash quorae-settings-editor__flash--{{ flashType ?? 'info' }}"
              role="status"
              aria-live="polite">
             <span>{{ flashMessage }}</span>
@@ -23,6 +24,7 @@
     {% endif %}
 
     <form class="quorae-settings-editor__form"
+          data-turbo="false"
           data-action="live#action:prevent"
           data-live-action-param="save">
         {% if fields is empty %}
