@@ -27,10 +27,32 @@ use Quorae\SettingsBundle\Service\SettingsSerializer;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\DependencyInjection\Definition;
 use Symfony\Component\DependencyInjection\Extension\Extension;
+use Symfony\Component\DependencyInjection\Extension\PrependExtensionInterface;
 use Symfony\Component\DependencyInjection\Reference;
 
-final class QuoraeSettingsExtension extends Extension
+final class QuoraeSettingsExtension extends Extension implements PrependExtensionInterface
 {
+    public function prepend(ContainerBuilder $container): void
+    {
+        if (!$container->hasExtension('doctrine')) {
+            return;
+        }
+
+        $container->prependExtensionConfig('doctrine', [
+            'orm' => [
+                'mappings' => [
+                    'QuoraeSettingsBundle' => [
+                        'type' => 'attribute',
+                        'is_bundle' => false,
+                        'dir' => \dirname(__DIR__) . '/Entity',
+                        'prefix' => 'Quorae\\SettingsBundle\\Entity',
+                        'alias' => 'QuoraeSettings',
+                    ],
+                ],
+            ],
+        ]);
+    }
+
     public function load(array $configs, ContainerBuilder $container): void
     {
         $configuration = new Configuration();
