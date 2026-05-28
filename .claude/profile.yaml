@@ -64,13 +64,9 @@ workflows:
   features:
     spec_challenge: false
     plan_driven_mode: true
-    tier_classification: false
-    smoke_contracts: false
     wiki_doc: false
     mcp_tools: false
-    auto_debugger_on_fail: true
     post_workflow_reflection: true
-    chaos_audit: false
 
 gotchas:
   - "Bundle extracted from AICD — keep BC, no AICD-specific assumptions"
