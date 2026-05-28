@@ -68,6 +68,9 @@ workflows:
     mcp_tools: false
     post_workflow_reflection: true
 
+testing:
+  api_verification: false
+
 gotchas:
   - "Bundle extracted from AICD — keep BC, no AICD-specific assumptions"
   - "Optional deps (Live Components, Security) must stay optional — use interface segregation"
