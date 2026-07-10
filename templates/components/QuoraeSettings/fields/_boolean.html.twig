@@ -23,16 +23,20 @@
         <p class="quorae-settings-field__description">{{ field.description }}</p>
     {% endif %}
 
-    <label class="quorae-settings-field__checkbox" for="{{ fieldId }}">
+    <span class="quorae-settings-field__toggle">
         <input type="checkbox"
+               class="quorae-settings-field__toggle-input"
                id="{{ fieldId }}"
                name="{{ key }}"
                value="1"
                {% if value %}checked{% endif %}
                data-model="values[{{ key }}]"
+               aria-label="{{ field.label }}"
                {% if errors %}aria-invalid="true" aria-describedby="{{ errorId }}"{% endif %} />
-        <span>{{ value ? 'Enabled' : 'Disabled' }}</span>
-    </label>
+        <label class="quorae-settings-field__toggle-track" for="{{ fieldId }}" aria-hidden="true">
+            <span class="quorae-settings-field__toggle-thumb"></span>
+        </label>
+    </span>
 
     {% if errors %}
         <ul class="quorae-settings-field__errors" id="{{ errorId }}" role="alert">
