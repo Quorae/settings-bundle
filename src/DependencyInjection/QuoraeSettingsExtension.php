@@ -8,6 +8,7 @@ use Quorae\SettingsBundle\Command\SettingsCacheCommand;
 use Quorae\SettingsBundle\Command\SettingsCheckEncryptionCommand;
 use Quorae\SettingsBundle\Command\SettingsClearCommand;
 use Quorae\SettingsBundle\Command\SettingsListCommand;
+use Quorae\SettingsBundle\Command\SettingsSetCommand;
 use Quorae\SettingsBundle\Contract\SettingOverrideRepositoryInterface;
 use Quorae\SettingsBundle\Contract\SettingsDefinitionProviderInterface;
 use Quorae\SettingsBundle\Contract\SettingsReaderInterface;
@@ -166,6 +167,7 @@ final class QuoraeSettingsExtension extends Extension implements PrependExtensio
             SettingsClearCommand::class,
             SettingsListCommand::class,
             SettingsCheckEncryptionCommand::class,
+            SettingsSetCommand::class,
         ] as $class) {
             $definition = new Definition($class);
             $definition->setAutowired(true);
