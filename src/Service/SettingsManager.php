@@ -138,12 +138,18 @@ final class SettingsManager implements SettingsReaderInterface, SettingsWriterIn
                 continue;
             }
 
-            $touchedKeys[] = $key;
-            $field = $fields[$key];
-
+            // The masked sentinel ('********') is the round-trip echo of a DISPLAYED secret
+            // (cf. SettingsDisplayHelper::renderForDisplay): it means "keep the current value".
+            // It must therefore be neither saved NOR deleted — hence the early `continue`
+            // BEFORE the key is marked as touched. Marking it first put the key in
+            // $keysToDelete (touched but absent from $toSave) and the sentinel ERASED the
+            // very secret it was supposed to preserve.
             if ($this->serializer->isMaskedSentinel($value)) {
                 continue;
             }
+
+            $touchedKeys[] = $key;
+            $field = $fields[$key];
 
             $serialized = $this->serializer->serialize($value);
             $serializedDefault = $this->serializer->serialize($defaults[$key] ?? null);
