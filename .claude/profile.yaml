@@ -46,6 +46,7 @@ code_style:
 quality_commands:
   static_analysis: "vendor/bin/phpstan analyse"
   unit_test: "vendor/bin/phpunit"
+  unit_test_filter: "vendor/bin/phpunit --filter={filter}"
   style_check: "vendor/bin/php-cs-fixer check"
   style_fix: "vendor/bin/php-cs-fixer fix"
   full_check: "vendor/bin/phpstan analyse && vendor/bin/phpunit"
